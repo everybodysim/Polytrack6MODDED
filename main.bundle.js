@@ -8289,7 +8289,7 @@
                         l.gn)(this, Ce, "f").rims);
                         (0,
                         l.gn)(this, G, "m", Ve).call(this, t);
-                        return (1 == e || 3 == e) && (t.scale.x = -1),
+                        return (1 == e || 3 == e) && (t.scale.x = -Math.abs(t.scale.x)),
                         t
                     }
                     )), "f"),
@@ -8568,7 +8568,7 @@
                                 l.gn)(this, G, "m", Ve).call(this, i),
                                 i.position.copy(n.position),
                                 i.quaternion.copy(n.quaternion),
-                                i.scale.copy(n.scale),
+                                (1 == t || 3 == t) && (i.scale.x = -Math.abs(i.scale.x)),
                                 (0,
                                 l.gn)(this, ve, "f").add(i),
                                 (0,
@@ -8865,7 +8865,13 @@
                                     return t
                                 }
                                 ))
-                                  , a = r.map((e => e.geometry))
+                                  , a = r.map((t => {
+                                    const n = t.geometry.clone();
+                                    return "Wheel11" == e && (t.updateMatrix(),
+                                    n.applyMatrix4(t.matrix.clone())),
+                                    n
+                                }
+                                ))
                                   , s = u.pP(a, !0);
                                 t && (i.updateMatrixWorld(!0),
                                 s.applyMatrix4(i.matrix.clone())),
@@ -9132,14 +9138,24 @@
                 i
             }
             ,
-            je = function(e) {
-                if (null == F.models)
-                    throw new Error("Car models aren't loaded yet");
-                const t = F.models.rims.get(e);
-                if (null == t)
-                    throw new Error("Rims model not found");
-                return t.clone()
-            }
+                je = function(e) {
+                    if (null == F.models)
+                        throw new Error("Car models aren't loaded yet");
+                    const t = F.models.rims.get(e);
+                    if (null == t)
+                        throw new Error("Rims model not found");
+                    const n = t.clone();
+                    if (11 == e) {
+                        n.scale.set(.5, .5, .5),
+                        n.updateMatrixWorld(!0);
+                        n.traverse((e => {
+                            e instanceof c.eaF && (e.geometry.computeBoundingBox(),
+                            e.geometry.computeBoundingSphere())
+                        }
+                        ))
+                    }
+                    return n
+                }
             ,
             Ke = function(e) {
                 if (null == F.models)
