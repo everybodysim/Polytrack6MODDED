@@ -8865,7 +8865,13 @@
                                     return t
                                 }
                                 ))
-                                  , a = r.map((e => e.geometry))
+                                  , a = r.map((t => {
+                                    const n = t.geometry.clone();
+                                    return "Wheel11" == e && (t.updateMatrix(),
+                                    n.applyMatrix4(t.matrix.clone())),
+                                    n
+                                }
+                                ))
                                   , s = u.pP(a, !0);
                                 t && (i.updateMatrixWorld(!0),
                                 s.applyMatrix4(i.matrix.clone())),
