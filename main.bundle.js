@@ -8865,7 +8865,8 @@
                                     return t
                                 }
                                 ))
-                                  , a = r.map((e => e.geometry))
+                                  , a = r.map((e => (e.updateMatrix(),
+                                e.geometry.clone().applyMatrix4(e.matrix.clone()))))
                                   , s = u.pP(a, !0);
                                 t && (i.updateMatrixWorld(!0),
                                 s.applyMatrix4(i.matrix.clone())),
